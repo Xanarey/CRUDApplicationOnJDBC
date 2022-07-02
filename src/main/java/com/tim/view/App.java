@@ -1,4 +1,4 @@
-package com.tim;
+package com.tim.view;
 
 public class App 
 {

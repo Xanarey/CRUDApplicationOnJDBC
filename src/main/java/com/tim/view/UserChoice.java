@@ -26,7 +26,6 @@ public class UserChoice {
 
             if (CHOICE_MENU == 3) {
                 System.out.println("Вводим данные РАЗРАБА");
-                int id = developerRepository.getNewIdDeveloper();
 
                 System.out.println("Введите First_Name:");
                 do {
@@ -41,7 +40,7 @@ public class UserChoice {
                 do {
                     System.out.println("Введите STATUS (ACTIVE):");
                     STATUS = scanner.nextLine();
-                } while (!STATUS.equals("ACTIVE"));
+                } while (Objects.equals(STATUS, ""));
 
                 System.out.println("Введите Specialty:");
                 do {
@@ -54,7 +53,12 @@ public class UserChoice {
                 } while (Objects.equals(SKILL, ""));
 
                 developerRepository.insertDeveloper(FIRST_NAME, LAST_NAME, STATUS, SPECIALTY, SKILL);
-
+                System.out.println("TEST: ");
+                System.out.println(FIRST_NAME);
+                System.out.println(LAST_NAME);
+                System.out.println(STATUS);
+                System.out.println(SPECIALTY);
+                System.out.println(SKILL);
                 System.out.println("Разработчик: [" + FIRST_NAME + " " + LAST_NAME + "] успешно добавлен");
             }
 
@@ -63,8 +67,10 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 5) {
-                System.out.println(developerRepository.getNewIdDeveloper());
+                developerRepository.saveChange();
+                System.out.println("Выйти и сохранить");
             }
+
         } while (CHOICE_MENU != 1);
         System.out.println("Вы вышли из приложения");
     }

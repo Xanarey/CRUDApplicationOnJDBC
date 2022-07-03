@@ -10,6 +10,7 @@ public class GenericRepository {
 
     Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
     Statement statement = connection.createStatement();
+    PreparedStatement preparedStatement;
     ResultSet resultSet;
     String sqlQuery;
 
@@ -22,16 +23,21 @@ public class GenericRepository {
         return resultSet;
     }
 
-    public void insert(int id, String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
-        sqlQuery = "INSERT INTO developers(id, FirstName, LastName, Status, Specialty, Skills) VALUES " +
-                "("+ id +","+firstName+","+lastName+","+status+","+specialty+","+skills+")";
-        statement.addBatch(sqlQuery);
+    public void insert(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
+        sqlQuery = "INSERT INTO developers(id, FirstName, LastName, Status, Specialty, Skills) " +
+                   "VALUES (id, ?,?,?,?,?)";
+
+
+
     }
 
-    public ResultSet getId() throws SQLException {
-        sqlQuery = "SELECT id FROM developers ORDER BY id DESC LIMIT 1";
-        resultSet = statement.executeQuery(sqlQuery);
-        return resultSet;
+    public void saveChange() throws SQLException {
+        resultSet.close();
+        statement.close();
+        preparedStatement.close();
+        connection.close();
     }
+
+
 
 }

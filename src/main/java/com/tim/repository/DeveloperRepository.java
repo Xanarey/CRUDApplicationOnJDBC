@@ -16,17 +16,12 @@ public class DeveloperRepository extends GenericRepository{
     }
 
     @Override
-    public void insert(int id, String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
-        super.insert(id, firstName, lastName, status, specialty, skills);
-    }
-
-    @Override
-    public ResultSet getId() throws SQLException {
-        return super.getId();
+    public void insert(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
+        super.insert(firstName, lastName, status, specialty, skills);
     }
 
     public void insertDeveloper(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
-        insert(getNewIdDeveloper(), firstName, lastName, status, specialty, skills);
+        insert(firstName, lastName, status, specialty, skills);
     }
 
     public void getAllDevelopers() throws SQLException {
@@ -50,12 +45,4 @@ public class DeveloperRepository extends GenericRepository{
         }
     }
 
-    public int getNewIdDeveloper() throws SQLException {
-        resultSet = getId();
-        int id = 0;
-        while (resultSet.next()) {
-            id = resultSet.getInt("id");
-        }
-        return id + 1;
-    }
 }

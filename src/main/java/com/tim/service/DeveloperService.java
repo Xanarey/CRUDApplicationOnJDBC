@@ -1,8 +1,8 @@
-package com.tim.repository.mysql;
+package com.tim.service;
 import com.tim.repository.DeveloperRepository;
 import java.sql.*;
 
-public class MySQLDeveloperRepository implements DeveloperRepository {
+public class DeveloperService implements DeveloperRepository {
 
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
     static final String USER = "root";
@@ -14,7 +14,7 @@ public class MySQLDeveloperRepository implements DeveloperRepository {
     ResultSet resultSet;
     String sqlQuery;
 
-    public MySQLDeveloperRepository() throws SQLException {
+    public DeveloperService() throws SQLException {
     }
 
     @Override

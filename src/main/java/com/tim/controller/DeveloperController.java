@@ -1,12 +1,12 @@
 package com.tim.controller;
 
-import com.tim.repository.mysql.MySQLDeveloperRepository;
+import com.tim.service.DeveloperService;
 
 import java.sql.SQLException;
 
 public class DeveloperController {
 
-    private MySQLDeveloperRepository myDevRep = new MySQLDeveloperRepository();
+    private DeveloperService myDevRep = new DeveloperService();
 
     public DeveloperController() throws SQLException {
     }

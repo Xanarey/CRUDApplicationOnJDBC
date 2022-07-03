@@ -22,9 +22,9 @@ public class GenericRepository {
         return resultSet;
     }
 
-    public void insert(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
+    public void insert(int id, String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
         sqlQuery = "INSERT INTO developers(id, FirstName, LastName, Status, Specialty, Skills) VALUES " +
-                "("+ getId() +","+firstName+","+lastName+","+status+","+specialty+","+skills+")";
+                "("+ id +","+firstName+","+lastName+","+status+","+specialty+","+skills+")";
         statement.addBatch(sqlQuery);
     }
 

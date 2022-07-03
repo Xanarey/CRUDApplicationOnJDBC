@@ -1,8 +1,10 @@
 package com.tim.view;
 
+import com.tim.model.Status;
 import com.tim.repository.DeveloperRepository;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UserChoice {
@@ -24,7 +26,36 @@ public class UserChoice {
 
             if (CHOICE_MENU == 3) {
                 System.out.println("Вводим данные РАЗРАБА");
-//TODO СДЕЛАТЬ ПЕРЕМЕННЫЕ ПРИНИМАЮЩИЕ ВСЕ ДАННЫЕ РАЗРАБА и ЗАТЕМ ПРИМЕНИТЬ МЕТОД insertDeveloper из DeveloperRepository
+                int id = developerRepository.getNewIdDeveloper();
+
+                System.out.println("Введите First_Name:");
+                do {
+                    FIRST_NAME = scanner.nextLine();
+                } while (Objects.equals(FIRST_NAME, ""));
+
+                System.out.println("Введите Last_Name:");
+                do {
+                    LAST_NAME = scanner.nextLine();
+                } while (Objects.equals(LAST_NAME, ""));
+
+                do {
+                    System.out.println("Введите STATUS (ACTIVE):");
+                    STATUS = scanner.nextLine();
+                } while (!STATUS.equals("ACTIVE"));
+
+                System.out.println("Введите Specialty:");
+                do {
+                    SPECIALTY = scanner.nextLine();
+                } while (Objects.equals(SPECIALTY, ""));
+
+                System.out.println("Введите Skill:");
+                do {
+                    SKILL = scanner.nextLine();
+                } while (Objects.equals(SKILL, ""));
+
+                developerRepository.insertDeveloper(FIRST_NAME, LAST_NAME, STATUS, SPECIALTY, SKILL);
+
+                System.out.println("Разработчик: [" + FIRST_NAME + " " + LAST_NAME + "] успешно добавлен");
             }
 
             if (CHOICE_MENU == 4) {
@@ -44,8 +75,13 @@ public class UserChoice {
             2.  Вывести базу данных
             3.  Добавить разработчика
             4.  Удалить разработчика
-            5.  (Вывести последний id)
+            5.  (Вывести новый id)
             """;
 
     public static Long CHOICE_MENU;
+    public static String FIRST_NAME;
+    public static String LAST_NAME;
+    public static String STATUS;
+    public static String SPECIALTY;
+    public static String SKILL;
 }

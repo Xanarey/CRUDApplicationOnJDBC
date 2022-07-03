@@ -1,18 +1,25 @@
 package com.tim.view;
 
+import com.tim.repository.DeveloperRepository;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserChoice {
 
     Scanner scanner = new Scanner(System.in);
+    DeveloperRepository developerRepository = new DeveloperRepository();
 
-    public void start() {
+    public UserChoice() throws SQLException {
+    }
+
+    public void start() throws SQLException {
         do {
             System.out.println(MENU);
             CHOICE_MENU = scanner.nextLong();
 
             if (CHOICE_MENU == 2) {
-                System.out.println("НАША БД");
+                developerRepository.getAllDevelopers();
             }
 
             if (CHOICE_MENU == 3) {

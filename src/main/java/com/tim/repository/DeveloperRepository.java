@@ -1,23 +1,22 @@
-package com.tim.view;
+package com.tim.repository;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class DevelopersJDBC {
+public class DeveloperRepository extends GenericRepository{
 
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
-    static final String USER = "root";
-    static final String PASSWORD = "password";
+    ResultSet resultSet;
 
-    public static void startingJDBC() throws SQLException {
+    public DeveloperRepository() throws SQLException {
+    }
 
-        Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
-        Statement statement = connection.createStatement();
+    @Override
+    public ResultSet getAll() throws SQLException {
+        return super.getAll();
+    }
 
-        String sqlSELECT = "SELECT * FROM developers";
-
-        ResultSet resultSet = statement.executeQuery(sqlSELECT);
-        System.out.println("Retrieving data from database...");
-
+    public void getAllDevelopers() throws SQLException {
+        resultSet = getAll();
         System.out.println("\nDevelopers:");
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
@@ -34,11 +33,6 @@ public class DevelopersJDBC {
             System.out.println("status: " + status);
             System.out.println("specialty: " + specialty);
             System.out.println("skills: " + skills);
-
         }
-        resultSet.close();
-        statement.close();
-        connection.close();
     }
-
 }

@@ -1,9 +1,10 @@
 package com.tim.view;
 
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World! " );
+import java.sql.SQLException;
+
+public class App {
+    public static void main( String[] args ) throws SQLException {
+        System.out.println( "Start App" );
+        DevelopersJDBC.startingJDBC();
     }
 }

@@ -17,6 +17,18 @@ public class GenericRepository {
     public GenericRepository() throws SQLException {
     }
 
+    public void update(String fName, String lName) throws SQLException {
+        sqlQuery = "UPDATE developers " +
+                   "SET FirstName = ?, LastName = ?" +
+                   "WHERE FirstName = ? AND LastName = ?";
+        preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setString(1 ,fName);
+        preparedStatement.setString(2 ,lName);
+        preparedStatement.setString(1 ,fName);
+        preparedStatement.setString(2 ,lName);
+        preparedStatement.executeUpdate();
+    }
+
     public void delete(String fName, String lName) throws SQLException {
         sqlQuery = "DELETE FROM developers WHERE FirstName = ? AND LastName = ?";
         preparedStatement = connection.prepareStatement(sqlQuery);

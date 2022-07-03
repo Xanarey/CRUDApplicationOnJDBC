@@ -16,6 +16,11 @@ public class DeveloperRepository extends GenericRepository{
     }
 
     @Override
+    public void update(String fName, String lName) throws SQLException {
+        super.update(fName, lName);
+    }
+
+    @Override
     public void insert(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
         super.insert(firstName, lastName, status, specialty, skills);
     }
@@ -23,6 +28,10 @@ public class DeveloperRepository extends GenericRepository{
     @Override
     public void delete(String fName, String lName) throws SQLException {
         super.delete(fName, lName);
+    }
+
+    public void updateDeveloper(String fName, String lName) throws SQLException {
+        update(fName, lName);
     }
 
     public void deleteDeveloper(String firstName, String lastName) throws SQLException {

@@ -76,6 +76,20 @@ public class UserChoice {
                 developerRepository.deleteDeveloper(FIRST_NAME, LAST_NAME);
             }
 
+            if (CHOICE_MENU == 5) {
+                System.out.println("Вводим имя и фамилию разраба для редактирования");
+                System.out.println("Введите First_Name:");
+                do {
+                    FIRST_NAME = scanner.nextLine();
+                } while (Objects.equals(FIRST_NAME, ""));
+
+                System.out.println("Введите Last_Name:");
+                do {
+                    LAST_NAME = scanner.nextLine();
+                } while (Objects.equals(LAST_NAME, ""));
+                developerRepository.updateDeveloper(CHANGE_FIRST_NAME, CHANGE_LAST_NAME);
+            }
+
         } while (CHOICE_MENU != 1);
         developerRepository.saveChange();
         System.out.println("Вы вышли из приложения");
@@ -87,11 +101,14 @@ public class UserChoice {
             2.  Вывести базу данных
             3.  Добавить разработчика
             4.  Удалить разработчика
+            5.  Редактировать данные о разработчике
             """;
 
     public static Long CHOICE_MENU;
     public static String FIRST_NAME;
     public static String LAST_NAME;
+    public static String CHANGE_FIRST_NAME;
+    public static String CHANGE_LAST_NAME;
     public static String STATUS;
     public static String SPECIALTY;
     public static String SKILL;

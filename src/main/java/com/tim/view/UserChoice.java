@@ -25,8 +25,6 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 3) {
-                System.out.println("Вводим данные РАЗРАБА");
-
                 System.out.println("Введите First_Name:");
                 do {
                     FIRST_NAME = scanner.nextLine();
@@ -63,13 +61,12 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 4) {
-                System.out.println("Вводим имя и фамилию разраба , и удаляем его");
-                System.out.println("Введите First_Name:");
+                System.out.println("Введите First_Name для удаления:");
                 do {
                     FIRST_NAME = scanner.nextLine();
                 } while (Objects.equals(FIRST_NAME, ""));
 
-                System.out.println("Введите Last_Name:");
+                System.out.println("Введите Last_Name для удаления::");
                 do {
                     LAST_NAME = scanner.nextLine();
                 } while (Objects.equals(LAST_NAME, ""));
@@ -77,7 +74,7 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 5) {
-                System.out.println("Введите имя редактируемого разраба");
+                System.out.println("Введите имя редактируемого разработчика");
                 System.out.println("Введите First_Name:");
                 do {
                     FIRST_NAME = scanner.nextLine();

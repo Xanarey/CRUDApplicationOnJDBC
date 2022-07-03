@@ -19,9 +19,9 @@ public class MySQLDeveloperRepository implements DeveloperRepository {
 
     @Override
     public void save() throws SQLException {
-        resultSet.close();
-        statement.close();
-        preparedStatement.close();
+        if (resultSet != null) resultSet.close();
+        if (statement != null) statement.close();
+        if (preparedStatement != null) preparedStatement.close();
         connection.close();
     }
 

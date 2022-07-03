@@ -17,15 +17,15 @@ public class GenericRepository {
     public GenericRepository() throws SQLException {
     }
 
-    public void update(String fName, String lName) throws SQLException {
+    public void update(String fName, String lName, String newfName, String newlName) throws SQLException {
         sqlQuery = "UPDATE developers " +
                    "SET FirstName = ?, LastName = ?" +
                    "WHERE FirstName = ? AND LastName = ?";
         preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setString(1 ,fName);
-        preparedStatement.setString(2 ,lName);
-        preparedStatement.setString(1 ,fName);
-        preparedStatement.setString(2 ,lName);
+        preparedStatement.setString(1 ,newfName);
+        preparedStatement.setString(2 ,newlName);
+        preparedStatement.setString(3 ,fName);
+        preparedStatement.setString(4 ,lName);
         preparedStatement.executeUpdate();
     }
 

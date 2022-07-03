@@ -16,8 +16,8 @@ public class DeveloperRepository extends GenericRepository{
     }
 
     @Override
-    public void update(String fName, String lName) throws SQLException {
-        super.update(fName, lName);
+    public void update(String fName, String lName, String newfName, String newlName) throws SQLException {
+        super.update(fName, lName, newfName, newlName);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class DeveloperRepository extends GenericRepository{
         super.delete(fName, lName);
     }
 
-    public void updateDeveloper(String fName, String lName) throws SQLException {
-        update(fName, lName);
+    public void updateDeveloper(String fName, String lName, String newfName, String newlName) throws SQLException {
+        update(fName, lName, newfName, newlName);
     }
 
     public void deleteDeveloper(String firstName, String lastName) throws SQLException {

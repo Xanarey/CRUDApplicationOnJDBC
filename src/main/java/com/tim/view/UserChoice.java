@@ -77,7 +77,7 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 5) {
-                System.out.println("Вводим имя и фамилию разраба для редактирования");
+                System.out.println("Введите имя редактируемого разраба");
                 System.out.println("Введите First_Name:");
                 do {
                     FIRST_NAME = scanner.nextLine();
@@ -87,7 +87,18 @@ public class UserChoice {
                 do {
                     LAST_NAME = scanner.nextLine();
                 } while (Objects.equals(LAST_NAME, ""));
-                developerRepository.updateDeveloper(CHANGE_FIRST_NAME, CHANGE_LAST_NAME);
+
+                System.out.println("Введите новое First_Name:");
+                do {
+                    CHANGE_FIRST_NAME = scanner.nextLine();
+                } while (Objects.equals(FIRST_NAME, ""));
+
+                System.out.println("Введите новое Last_Name:");
+                do {
+                    CHANGE_LAST_NAME = scanner.nextLine();
+                } while (Objects.equals(LAST_NAME, ""));
+
+                developerRepository.updateDeveloper(FIRST_NAME, LAST_NAME, CHANGE_FIRST_NAME, CHANGE_LAST_NAME);
             }
 
         } while (CHOICE_MENU != 1);

@@ -20,6 +20,15 @@ public class DeveloperRepository extends GenericRepository{
         super.insert(firstName, lastName, status, specialty, skills);
     }
 
+    @Override
+    public void delete(String fName, String lName) throws SQLException {
+        super.delete(fName, lName);
+    }
+
+    public void deleteDeveloper(String firstName, String lastName) throws SQLException {
+        delete(firstName, lastName);
+    }
+
     public void insertDeveloper(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
         insert(firstName, lastName, status, specialty, skills);
     }

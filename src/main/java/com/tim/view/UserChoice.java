@@ -64,6 +64,16 @@ public class UserChoice {
 
             if (CHOICE_MENU == 4) {
                 System.out.println("Вводим имя и фамилию разраба , и удаляем его");
+                System.out.println("Введите First_Name:");
+                do {
+                    FIRST_NAME = scanner.nextLine();
+                } while (Objects.equals(FIRST_NAME, ""));
+
+                System.out.println("Введите Last_Name:");
+                do {
+                    LAST_NAME = scanner.nextLine();
+                } while (Objects.equals(LAST_NAME, ""));
+                developerRepository.deleteDeveloper(FIRST_NAME, LAST_NAME);
             }
 
         } while (CHOICE_MENU != 1);

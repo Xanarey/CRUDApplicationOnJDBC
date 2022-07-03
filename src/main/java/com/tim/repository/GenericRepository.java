@@ -27,8 +27,13 @@ public class GenericRepository {
         sqlQuery = "INSERT INTO developers(id, FirstName, LastName, Status, Specialty, Skills) " +
                    "VALUES (id, ?,?,?,?,?)";
 
-
-
+        preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setString(1, firstName);
+        preparedStatement.setString(2, lastName);
+        preparedStatement.setString(3, status);
+        preparedStatement.setString(4, specialty);
+        preparedStatement.setString(5, skills);
+        preparedStatement.executeUpdate();
     }
 
     public void saveChange() throws SQLException {

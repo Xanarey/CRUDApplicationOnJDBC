@@ -23,8 +23,8 @@ public class DeveloperController {
         myDevRep.deleteById(id);
     }
 
-    public void updateDeveloper(String firstName, String lastName, String firstNewName, String lastNewName) throws SQLException {
-        myDevRep.update(firstName, lastName, firstNewName, lastNewName);
+    public void updateDeveloper(Long id, String firstNewName, String lastNewName) throws SQLException {
+        myDevRep.update(id, firstNewName, lastNewName);
     }
 
     public void insertDeveloper(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {

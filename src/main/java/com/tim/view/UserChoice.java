@@ -69,28 +69,23 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 5) {
-                System.out.println("Введите имя редактируемого разработчика");
-                System.out.println("Введите First_Name:");
+                System.out.println("Введите id редактируемого разработчика");
+                do {
+                    if (ID <= 0)
+                        System.out.println("Введите [ id > 0 ]");
+                    ID = scanner.nextLong();
+                } while (ID <= 0);
+                System.out.println("Введите новое First_Name:");
                 do {
                     FIRST_NAME = scanner.nextLine();
                 } while (Objects.equals(FIRST_NAME, ""));
 
-                System.out.println("Введите Last_Name:");
+                System.out.println("Введите новое Last_Name:");
                 do {
                     LAST_NAME = scanner.nextLine();
                 } while (Objects.equals(LAST_NAME, ""));
 
-                System.out.println("Введите новое First_Name:");
-                do {
-                    CHANGE_FIRST_NAME = scanner.nextLine();
-                } while (Objects.equals(FIRST_NAME, ""));
-
-                System.out.println("Введите новое Last_Name:");
-                do {
-                    CHANGE_LAST_NAME = scanner.nextLine();
-                } while (Objects.equals(LAST_NAME, ""));
-
-                developerController.updateDeveloper(FIRST_NAME, LAST_NAME, CHANGE_FIRST_NAME, CHANGE_LAST_NAME);
+                developerController.updateDeveloper(ID, FIRST_NAME, LAST_NAME);
             }
 
         } while (CHOICE_MENU != 1);
@@ -107,12 +102,10 @@ public class UserChoice {
             5.  Редактировать данные о разработчике
             """;
 
-    public static Long ID;
+    public static Long ID = 0L;
     public static Long CHOICE_MENU;
     public static String FIRST_NAME;
     public static String LAST_NAME;
-    public static String CHANGE_FIRST_NAME;
-    public static String CHANGE_LAST_NAME;
     public static String STATUS;
     public static String SPECIALTY;
     public static String SKILL;

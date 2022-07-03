@@ -58,15 +58,14 @@ public class MySQLDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void update(String firstName, String lastName, String firstNewName, String lastNewName) throws SQLException {
+    public void update(Long id, String firstNewName, String lastNewName) throws SQLException {
         sqlQuery = "UPDATE developers " +
                    "SET FirstName = ?, LastName = ?" +
-                   "WHERE FirstName = ? AND LastName = ?";
+                   "WHERE id = ?";
         preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setString(1 ,firstName);
-        preparedStatement.setString(2 ,lastName);
-        preparedStatement.setString(3 ,firstNewName);
-        preparedStatement.setString(4 ,lastNewName);
+        preparedStatement.setString(1 ,firstNewName);
+        preparedStatement.setString(2 ,lastNewName);
+        preparedStatement.setLong(3 ,id);
         preparedStatement.executeUpdate();
     }
 

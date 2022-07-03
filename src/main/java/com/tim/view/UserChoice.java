@@ -66,12 +66,8 @@ public class UserChoice {
                 System.out.println("Вводим имя и фамилию разраба , и удаляем его");
             }
 
-            if (CHOICE_MENU == 5) {
-                developerRepository.saveChange();
-                System.out.println("Выйти и сохранить");
-            }
-
         } while (CHOICE_MENU != 1);
+        developerRepository.saveChange();
         System.out.println("Вы вышли из приложения");
     }
 
@@ -81,7 +77,6 @@ public class UserChoice {
             2.  Вывести базу данных
             3.  Добавить разработчика
             4.  Удалить разработчика
-            5.  (Вывести новый id)
             """;
 
     public static Long CHOICE_MENU;

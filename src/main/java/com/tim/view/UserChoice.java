@@ -1,4 +1,5 @@
 package com.tim.view;
+import com.tim.controller.DeveloperController;
 import com.tim.repository.mysql.MySQLDeveloperRepository;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 public class UserChoice {
 
     Scanner scanner = new Scanner(System.in);
-    MySQLDeveloperRepository developerRepository = new MySQLDeveloperRepository();
+    DeveloperController developerController = new DeveloperController();
 
     public UserChoice() throws SQLException {
     }
@@ -18,7 +19,7 @@ public class UserChoice {
             CHOICE_MENU = scanner.nextLong();
 
             if (CHOICE_MENU == 2) {
-                developerRepository.getAllDevelopers();
+                developerController.getAllDevelopers();
             }
 
             if (CHOICE_MENU == 3) {

@@ -1,9 +1,8 @@
 package com.tim.repository.mysql;
-import com.tim.repository.GeneralRepository;
-
+import com.tim.repository.DeveloperRepository;
 import java.sql.*;
 
-public class MySQLDeveloperRepository implements GeneralRepository {
+public class MySQLDeveloperRepository implements DeveloperRepository {
 
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
     static final String USER = "root";

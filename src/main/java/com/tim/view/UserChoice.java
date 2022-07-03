@@ -60,8 +60,6 @@ public class UserChoice {
             if (CHOICE_MENU == 4) {
                 System.out.println("Введите id для удаления:");
                 do {
-                    if (ID <= 0)
-                        System.out.println("Введите [ id > 0 ]");
                     ID = scanner.nextLong();
                 } while (ID <= 0);
 
@@ -71,8 +69,6 @@ public class UserChoice {
             if (CHOICE_MENU == 5) {
                 System.out.println("Введите id редактируемого разработчика");
                 do {
-                    if (ID <= 0)
-                        System.out.println("Введите [ id > 0 ]");
                     ID = scanner.nextLong();
                 } while (ID <= 0);
                 System.out.println("Введите новое First_Name:");

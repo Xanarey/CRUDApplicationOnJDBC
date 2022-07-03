@@ -35,4 +35,18 @@ public class DeveloperRepository extends GenericRepository{
             System.out.println("skills: " + skills);
         }
     }
+
+    @Override
+    public ResultSet getId() throws SQLException {
+        return super.getId();
+    }
+
+    public int getNewIdDeveloper() throws SQLException {
+        resultSet = getId();
+        int id = 0;
+        while (resultSet.next()) {
+            id = resultSet.getInt("id");
+        }
+        return id + 1;
+    }
 }

@@ -24,10 +24,15 @@ public class UserChoice {
 
             if (CHOICE_MENU == 3) {
                 System.out.println("Вводим данные РАЗРАБА");
+//TODO СДЕЛАТЬ ПЕРЕМЕННЫЕ ПРИНИМАЮЩИЕ ВСЕ ДАННЫЕ РАЗРАБА и ЗАТЕМ ПРИМЕНИТЬ МЕТОД insertDeveloper из DeveloperRepository
             }
 
             if (CHOICE_MENU == 4) {
                 System.out.println("Вводим имя и фамилию разраба , и удаляем его");
+            }
+
+            if (CHOICE_MENU == 5) {
+                System.out.println(developerRepository.getNewIdDeveloper());
             }
         } while (CHOICE_MENU != 1);
         System.out.println("Вы вышли из приложения");
@@ -39,7 +44,7 @@ public class UserChoice {
             2.  Вывести базу данных
             3.  Добавить разработчика
             4.  Удалить разработчика
-            5.  (Редактирование потом)
+            5.  (Вывести последний id)
             """;
 
     public static Long CHOICE_MENU;

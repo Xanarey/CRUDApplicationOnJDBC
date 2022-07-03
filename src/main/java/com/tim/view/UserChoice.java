@@ -1,5 +1,5 @@
 package com.tim.view;
-import com.tim.repository.DeveloperRepository;
+import com.tim.repository.mysql.MySQLDeveloperRepository;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class UserChoice {
 
     Scanner scanner = new Scanner(System.in);
-    DeveloperRepository developerRepository = new DeveloperRepository();
+    MySQLDeveloperRepository developerRepository = new MySQLDeveloperRepository();
 
     public UserChoice() throws SQLException {
     }

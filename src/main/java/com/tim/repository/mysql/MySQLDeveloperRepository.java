@@ -1,8 +1,9 @@
-package com.tim.repository;
+package com.tim.repository.mysql;
+import com.tim.repository.GeneralRepository;
 
 import java.sql.*;
 
-public class GenericRepository {
+public class MySQLDeveloperRepository implements GeneralRepository {
 
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
     static final String USER = "root";
@@ -14,29 +15,18 @@ public class GenericRepository {
     ResultSet resultSet;
     String sqlQuery;
 
-    public GenericRepository() throws SQLException {
+    public MySQLDeveloperRepository() throws SQLException {
     }
 
-    public void update(String fName, String lName, String newfName, String newlName) throws SQLException {
-        sqlQuery = "UPDATE developers " +
-                   "SET FirstName = ?, LastName = ?" +
-                   "WHERE FirstName = ? AND LastName = ?";
-        preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setString(1 ,newfName);
-        preparedStatement.setString(2 ,newlName);
-        preparedStatement.setString(3 ,fName);
-        preparedStatement.setString(4 ,lName);
-        preparedStatement.executeUpdate();
+    @Override
+    public void save() throws SQLException {
+        resultSet.close();
+        statement.close();
+        preparedStatement.close();
+        connection.close();
     }
 
-    public void delete(String fName, String lName) throws SQLException {
-        sqlQuery = "DELETE FROM developers WHERE FirstName = ? AND LastName = ?";
-        preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setString(1, fName);
-        preparedStatement.setString(2, lName);
-        preparedStatement.executeUpdate();
-    }
-
+    @Override
     public void getAll() throws SQLException {
         sqlQuery = "SELECT * FROM developers";
         resultSet = statement.executeQuery(sqlQuery);
@@ -59,6 +49,29 @@ public class GenericRepository {
         }
     }
 
+    @Override
+    public void deleteById(int id) throws SQLException {
+        sqlQuery = "DELETE FROM developers " +
+                   "WHERE id = ?";
+        preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+    }
+
+    @Override
+    public void update(String firstName, String lastName, String firstNewName, String lastNewName) throws SQLException {
+        sqlQuery = "UPDATE developers " +
+                   "SET FirstName = ?, LastName = ?" +
+                   "WHERE FirstName = ? AND LastName = ?";
+        preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setString(1 ,firstName);
+        preparedStatement.setString(2 ,lastName);
+        preparedStatement.setString(3 ,firstNewName);
+        preparedStatement.setString(4 ,lastNewName);
+        preparedStatement.executeUpdate();
+    }
+
+    @Override
     public void insert(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
         sqlQuery = "INSERT INTO developers(id, FirstName, LastName, Status, Specialty, Skills) " +
                    "VALUES (id, ?,?,?,?,?)";
@@ -70,12 +83,5 @@ public class GenericRepository {
         preparedStatement.setString(4, specialty);
         preparedStatement.setString(5, skills);
         preparedStatement.executeUpdate();
-    }
-
-    public void saveChange() throws SQLException {
-        resultSet.close();
-        statement.close();
-        preparedStatement.close();
-        connection.close();
     }
 }

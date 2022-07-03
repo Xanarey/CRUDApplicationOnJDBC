@@ -1,9 +1,5 @@
 package com.tim.view;
-
-import com.tim.model.Specialty;
-import com.tim.model.Status;
 import com.tim.repository.DeveloperRepository;
-
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;

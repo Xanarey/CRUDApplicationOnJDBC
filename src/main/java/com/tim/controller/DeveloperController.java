@@ -19,11 +19,11 @@ public class DeveloperController {
         myDevRep.getAll();
     }
 
-    public void deleteById(int id) throws SQLException {
+    public void deleteById(Long id) throws SQLException {
         myDevRep.deleteById(id);
     }
 
-    public void updateDevelopers(String firstName, String lastName, String firstNewName, String lastNewName) throws SQLException {
+    public void updateDeveloper(String firstName, String lastName, String firstNewName, String lastNewName) throws SQLException {
         myDevRep.update(firstName, lastName, firstNewName, lastNewName);
     }
 

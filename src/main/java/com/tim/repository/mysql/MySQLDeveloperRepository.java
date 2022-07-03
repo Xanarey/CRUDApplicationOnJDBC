@@ -49,11 +49,11 @@ public class MySQLDeveloperRepository implements DeveloperRepository {
     }
 
     @Override
-    public void deleteById(int id) throws SQLException {
+    public void deleteById(Long id) throws SQLException {
         sqlQuery = "DELETE FROM developers " +
                    "WHERE id = ?";
         preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setLong(1, id);
         preparedStatement.executeUpdate();
     }
 

@@ -1,6 +1,5 @@
 package com.tim.view;
 import com.tim.controller.DeveloperController;
-import com.tim.repository.mysql.MySQLDeveloperRepository;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -48,7 +47,7 @@ public class UserChoice {
                     SKILL = scanner.nextLine();
                 } while (Objects.equals(SKILL, ""));
 
-                developerRepository.insertDeveloper(FIRST_NAME, LAST_NAME, STATUS, SPECIALTY, SKILL);
+                developerController.insertDeveloper(FIRST_NAME, LAST_NAME, STATUS, SPECIALTY, SKILL);
                 System.out.println("TEST: ");
                 System.out.println(FIRST_NAME);
                 System.out.println(LAST_NAME);
@@ -59,16 +58,14 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 4) {
-                System.out.println("Введите First_Name для удаления:");
+                System.out.println("Введите id для удаления:");
                 do {
-                    FIRST_NAME = scanner.nextLine();
-                } while (Objects.equals(FIRST_NAME, ""));
+                    if (ID <= 0)
+                        System.out.println("Введите [ id > 0 ]");
+                    ID = scanner.nextLong();
+                } while (ID <= 0);
 
-                System.out.println("Введите Last_Name для удаления::");
-                do {
-                    LAST_NAME = scanner.nextLine();
-                } while (Objects.equals(LAST_NAME, ""));
-                developerRepository.deleteDeveloper(FIRST_NAME, LAST_NAME);
+                developerController.deleteById(ID);
             }
 
             if (CHOICE_MENU == 5) {
@@ -93,11 +90,11 @@ public class UserChoice {
                     CHANGE_LAST_NAME = scanner.nextLine();
                 } while (Objects.equals(LAST_NAME, ""));
 
-                developerRepository.updateDeveloper(FIRST_NAME, LAST_NAME, CHANGE_FIRST_NAME, CHANGE_LAST_NAME);
+                developerController.updateDeveloper(FIRST_NAME, LAST_NAME, CHANGE_FIRST_NAME, CHANGE_LAST_NAME);
             }
 
         } while (CHOICE_MENU != 1);
-        developerRepository.saveChange();
+        developerController.saveDevelopers();
         System.out.println("Вы вышли из приложения");
     }
 
@@ -110,6 +107,7 @@ public class UserChoice {
             5.  Редактировать данные о разработчике
             """;
 
+    public static Long ID;
     public static Long CHOICE_MENU;
     public static String FIRST_NAME;
     public static String LAST_NAME;

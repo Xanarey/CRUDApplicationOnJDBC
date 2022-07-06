@@ -27,25 +27,30 @@ public class DeveloperService implements DeveloperRepository {
 
     @Override
     public void getAll() throws SQLException {
-        sqlQuery = "SELECT firstName, lastName, status, specialty.name AS specialty_name, skills.name AS skill_name " +
-                "FROM developer, specialty, skills";
+        sqlQuery = "SELECT developers_skills.id AS id, developers_id AS developer_id," +
+                   "developer.firstName AS firstName, developer.lastName AS lastName, status, specialty.name AS specialty, skills.name AS skill\n" +
+                   "FROM developers_skills LEFT JOIN developer ON developers_skills.developers_id = developer.id\n" +
+                   "LEFT JOIN specialty ON developer.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;";
         resultSet = statement.executeQuery(sqlQuery);
         System.out.println("\nDevelopers:");
         while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String FirstName = resultSet.getString("firstName");
-            String LastName = resultSet.getString("lastName");
+
+            int devid = resultSet.getInt("developers_skills.id");
+            int id = resultSet.getInt("developers_id");
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("lastName");
             String status = resultSet.getString("status");
-            String specialty_name = resultSet.getString("specialty_name");
-            String skill_name = resultSet.getString("skill_name");
+            String specialty = resultSet.getString("specialty");
+            String skill = resultSet.getString("skill");
 
             System.out.println("\n================\n");
+            System.out.println("devid: " + devid);
             System.out.println("id: " + id);
-            System.out.println("firstName: " + FirstName);
-            System.out.println("lastName: " + LastName);
+            System.out.println("firstName: " + firstName);
+            System.out.println("lastName: " + lastName);
             System.out.println("status: " + status);
-            System.out.println("specialty_name: " + specialty_name);
-            System.out.println("skill_name: " + skill_name);
+            System.out.println("specialty_name: " + specialty);
+            System.out.println("skill_name: " + skill);
         }
     }
 

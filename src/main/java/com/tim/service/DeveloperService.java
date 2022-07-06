@@ -83,6 +83,8 @@ public class DeveloperService implements DeveloperRepository {
         sqlQuery = "INSERT INTO developer(id, firstName, lastName, status, specialty_id) " +
                    "VALUES (id, ?,?,?,?,?)";
 
+        // TODO СДЕЛАТЬ ЧТОБЫ ДОБАВЛЯЛОСЬ И В developers_skills тоже....
+
         preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setString(1, firstName);
         preparedStatement.setString(2, lastName);

@@ -27,7 +27,15 @@ public class DeveloperController {
         myDevRep.update(id, firstNewName, lastNewName);
     }
 
-    public void insertDeveloper(String firstName, String lastName, String status, String specialty, String skills) throws SQLException {
+    public void insertDeveloper(String firstName, String lastName, String status, int specialty, int skills) throws SQLException {
         myDevRep.insert(firstName, lastName, status, specialty, skills);
+    }
+
+    public void getAllSpecialtyDeveloper() {
+        myDevRep.getAllSpecialty();
+    }
+
+    public void getAllSkillsDeveloper() {
+        myDevRep.getAllSkills();
     }
 }

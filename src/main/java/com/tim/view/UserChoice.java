@@ -32,20 +32,19 @@ public class UserChoice {
                     LAST_NAME = scanner.nextLine();
                 } while (Objects.equals(LAST_NAME, ""));
 
-                do {
-                    System.out.println("Введите STATUS (ACTIVE):");
-                    STATUS = scanner.nextLine();
-                } while (Objects.equals(STATUS, ""));
+                STATUS = "ACTIVE";
 
-                System.out.println("Введите Specialty:");
+                System.out.println("Введите id Specialty:");
                 do {
-                    SPECIALTY = scanner.nextLine();
-                } while (Objects.equals(SPECIALTY, ""));
+                    developerController.getAllSpecialtyDeveloper();
+                    SPECIALTY = scanner.nextInt();
+                } while (SPECIALTY <= 0);
 
-                System.out.println("Введите Skill:");
+                System.out.println("Введите id Skill:");
                 do {
-                    SKILL = scanner.nextLine();
-                } while (Objects.equals(SKILL, ""));
+                    developerController.getAllSkillsDeveloper();
+                    SKILL = scanner.nextInt();
+                } while (SKILL <= 0);
 
                 developerController.insertDeveloper(FIRST_NAME, LAST_NAME, STATUS, SPECIALTY, SKILL);
                 System.out.println("TEST: ");
@@ -98,11 +97,11 @@ public class UserChoice {
             5.  Редактировать данные о разработчике
             """;
 
+    public static int SKILL;
+    public static int SPECIALTY;
     public static Long ID = 0L;
     public static Long CHOICE_MENU;
     public static String FIRST_NAME;
     public static String LAST_NAME;
     public static String STATUS;
-    public static String SPECIALTY;
-    public static String SKILL;
 }

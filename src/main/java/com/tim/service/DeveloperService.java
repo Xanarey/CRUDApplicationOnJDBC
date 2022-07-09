@@ -14,6 +14,7 @@ public class DeveloperService implements DeveloperRepository {
     Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
     Statement statement = connection.createStatement();
     PreparedStatement preparedStatement;
+    PreparedStatement preparedStatementIns;
     ResultSet resultSet;
     String sqlQuery;
 
@@ -25,6 +26,7 @@ public class DeveloperService implements DeveloperRepository {
         if (resultSet != null) resultSet.close();
         if (statement != null) statement.close();
         if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) preparedStatementIns.close();
         connection.close();
     }
 
@@ -86,20 +88,14 @@ public class DeveloperService implements DeveloperRepository {
         sqlQuery = "INSERT INTO developers(firstName, lastName, status, specialty_id) " +
                    "VALUES (?,?,?,?)";
 
-        preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setString(1, firstName);
-        preparedStatement.setString(2, lastName);
-        preparedStatement.setString(3, status);
-        preparedStatement.setInt(4, specialty);
-        preparedStatement.executeUpdate();
+        preparedStatementIns = connection.prepareStatement(sqlQuery);
+        preparedStatementIns.setString(1, firstName);
+        preparedStatementIns.setString(2, lastName);
+        preparedStatementIns.setString(3, status);
+        preparedStatementIns.setInt(4, specialty);
+        preparedStatementIns.executeUpdate();
 
-        sqlQuery = "INSERT INTO developers_skills(developers_id, skills_id)" +
-                   "VALUES (?, ?)";
-
-        preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setInt(1, getId());
-        preparedStatement.setInt(2, skills);
-        preparedStatement.executeUpdate();
+        insertDeveloper_Skills(skills);
     }
 
     public void getAllSpecialty() {
@@ -137,9 +133,19 @@ public class DeveloperService implements DeveloperRepository {
         }
     }
 
+    public void insertDeveloper_Skills(int skills) throws SQLException {
+        String sqlQuery2 = "INSERT INTO developers_skills(developers_id, skills_id)" +
+                "VALUES (?, ?)";
+
+        preparedStatement = connection.prepareStatement(sqlQuery2);
+        preparedStatement.setInt(1, getId());
+        preparedStatement.setInt(2, skills);
+        preparedStatement.executeUpdate();
+    }
+
     public int getId() throws SQLException {
-        sqlQuery = "SELECT id FROM developers ORDER BY id DESC  LIMIT 1";
-        resultSet = statement.executeQuery(sqlQuery);
+        String sqlQuery3 = "SELECT id FROM developers ORDER BY id DESC  LIMIT 1";
+        resultSet = statement.executeQuery(sqlQuery3);
         int id = 0;
         while (resultSet.next()) {
             id = resultSet.getInt("id");

@@ -38,4 +38,8 @@ public class DeveloperController {
     public void getAllSkillsDeveloper() {
         myDevRep.getAllSkills();
     }
+
+    public int getNewIdDeveloper() throws SQLException {
+        return myDevRep.getId();
+    }
 }

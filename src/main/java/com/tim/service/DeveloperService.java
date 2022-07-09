@@ -86,28 +86,24 @@ public class DeveloperService implements DeveloperRepository {
         sqlQuery = "INSERT INTO developers(firstName, lastName, status, specialty_id) " +
                    "VALUES (?,?,?,?)";
 
-
-        connection.setAutoCommit(false);
-
-        // TODO СДЕЛАТЬ ЧТОБЫ ДОБАВЛЯЛОСЬ И В developers_skills тоже....
-
         preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setString(1, firstName);
         preparedStatement.setString(2, lastName);
         preparedStatement.setString(3, status);
         preparedStatement.setInt(4, specialty);
-        preparedStatement.addBatch(sqlQuery);
+        preparedStatement.executeUpdate();
 
-        preparedStatement.executeBatch();
+        sqlQuery = "INSERT INTO developers_skills(developers_id, skills_id)" +
+                   "VALUES (?, ?)";
 
-        connection.commit();
-
-        connection.setAutoCommit(true);
-
-        //preparedStatement.executeUpdate();
+        preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.setInt(1, getId());
+        preparedStatement.setInt(2, skills);
+        preparedStatement.executeUpdate();
     }
 
     public void getAllSpecialty() {
+
         sqlQuery = "SELECT * FROM specialty";
         try {
             resultSet = statement.executeQuery(sqlQuery);
@@ -139,5 +135,15 @@ public class DeveloperService implements DeveloperRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getId() throws SQLException {
+        sqlQuery = "SELECT id FROM developers ORDER BY id DESC  LIMIT 1";
+        resultSet = statement.executeQuery(sqlQuery);
+        int id = 0;
+        while (resultSet.next()) {
+            id = resultSet.getInt("id");
+        }
+        return id;
     }
 }

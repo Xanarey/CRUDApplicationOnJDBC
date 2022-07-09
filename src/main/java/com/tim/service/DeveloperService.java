@@ -4,9 +4,12 @@ import java.sql.*;
 
 public class DeveloperService implements DeveloperRepository {
 
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
-    static final String USER = "root";
-    static final String PASSWORD = "password";
+    //static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
+    static final String DATABASE_URL = "jdbc:sqlite:identifier.sqlite";
+    static final String USER = "";
+    static final String PASSWORD = "";
+
+
 
     Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
     Statement statement = connection.createStatement();
@@ -28,16 +31,16 @@ public class DeveloperService implements DeveloperRepository {
     @Override
     public void getAll() {
 
-        sqlQuery = "SELECT developers_skills.id AS id, developers_id AS developer_id," +
-                   "developer.firstName AS firstName, developer.lastName AS lastName, status, specialty.name AS specialty, skills.name AS skill\n" +
-                   "FROM developers_skills LEFT JOIN developer ON developers_skills.developers_id = developer.id\n" +
-                   "LEFT JOIN specialty ON developer.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;";
+        sqlQuery = "SELECT developers_skills.id AS id, developers.id AS developer_id," +
+                   "developers.firstName AS firstName, developers.lastName AS lastName, developers.status AS status, specialty.name AS specialty, skills.name AS skill\n" +
+                   "FROM developers_skills LEFT JOIN developers ON developers_skills.developers_id = developers.id\n" +
+                   "LEFT JOIN specialty ON developers.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;";
         try {
             resultSet = statement.executeQuery(sqlQuery);
             System.out.println("\nDevelopers:");
             while (resultSet.next()) {
 
-                int devId = resultSet.getInt("developers_skills.id");
+                int devId = resultSet.getInt("id");
                 int id = resultSet.getInt("developer_id");
                 String firstName = resultSet.getString("firstName");
                 String lastName = resultSet.getString("lastName");
@@ -61,7 +64,7 @@ public class DeveloperService implements DeveloperRepository {
 
     @Override
     public void deleteById(Long id) throws SQLException {
-        sqlQuery = "UPDATE developer SET status = 'DELETED' WHERE id = ?";
+        sqlQuery = "UPDATE developers SET status = 'DELETED' WHERE id = ?";
         preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setLong(1, id);
         preparedStatement.executeUpdate();
@@ -69,7 +72,7 @@ public class DeveloperService implements DeveloperRepository {
 
     @Override
     public void update(Long id, String firstNewName, String lastNewName) throws SQLException {
-        sqlQuery = "UPDATE developer SET firstName = ?, lastName = ? WHERE id = ?";
+        sqlQuery = "UPDATE developers SET firstName = ?, lastName = ? WHERE id = ?";
         preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.setString(1 ,firstNewName);
         preparedStatement.setString(2 ,lastNewName);
@@ -80,8 +83,8 @@ public class DeveloperService implements DeveloperRepository {
     @Override
     public void insert(String firstName, String lastName, String status, int specialty, int skills) throws SQLException {
 
-        sqlQuery = "INSERT INTO developer(id, firstName, lastName, status, specialty_id) " +
-                   "VALUES (id, ?,?,?,?,?)";
+        sqlQuery = "INSERT INTO developers(firstName, lastName, status, specialty_id) " +
+                   "VALUES (?,?,?,?)";
 
         // TODO СДЕЛАТЬ ЧТОБЫ ДОБАВЛЯЛОСЬ И В developers_skills тоже....
 
@@ -90,7 +93,6 @@ public class DeveloperService implements DeveloperRepository {
         preparedStatement.setString(2, lastName);
         preparedStatement.setString(3, status);
         preparedStatement.setInt(4, specialty);
-        preparedStatement.setInt(5, skills);
         preparedStatement.executeUpdate();
     }
 

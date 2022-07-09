@@ -86,6 +86,9 @@ public class DeveloperService implements DeveloperRepository {
         sqlQuery = "INSERT INTO developers(firstName, lastName, status, specialty_id) " +
                    "VALUES (?,?,?,?)";
 
+
+        connection.setAutoCommit(false);
+
         // TODO СДЕЛАТЬ ЧТОБЫ ДОБАВЛЯЛОСЬ И В developers_skills тоже....
 
         preparedStatement = connection.prepareStatement(sqlQuery);
@@ -93,7 +96,15 @@ public class DeveloperService implements DeveloperRepository {
         preparedStatement.setString(2, lastName);
         preparedStatement.setString(3, status);
         preparedStatement.setInt(4, specialty);
-        preparedStatement.executeUpdate();
+        preparedStatement.addBatch(sqlQuery);
+
+        preparedStatement.executeBatch();
+
+        connection.commit();
+
+        connection.setAutoCommit(true);
+
+        //preparedStatement.executeUpdate();
     }
 
     public void getAllSpecialty() {

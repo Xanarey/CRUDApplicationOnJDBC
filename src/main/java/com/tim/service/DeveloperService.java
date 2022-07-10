@@ -34,9 +34,11 @@ public class DeveloperService implements DeveloperRepository {
     public void getAll() {
 
         sqlQuery = "SELECT developers_skills.id AS id, developers.id AS developer_id," +
-                   "developers.firstName AS firstName, developers.lastName AS lastName, developers.status AS status, specialty.name AS specialty, skills.name AS skill\n" +
+                   "developers.firstName AS firstName, developers.lastName AS lastName, " +
+                   "developers.status AS status, specialty.name AS specialty, skills.name AS skill\n" +
                    "FROM developers_skills LEFT JOIN developers ON developers_skills.developers_id = developers.id\n" +
-                   "LEFT JOIN specialty ON developers.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;";
+                   "LEFT JOIN specialty ON developers.specialty_id = specialty.id " +
+                   "LEFT JOIN skills ON developers_skills.skills_id = skills.id;";
         try {
             resultSet = statement.executeQuery(sqlQuery);
             System.out.println("\nDevelopers:");

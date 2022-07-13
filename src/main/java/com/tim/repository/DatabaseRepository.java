@@ -11,8 +11,7 @@ public class DatabaseRepository implements DeveloperRepository {
 
 
 
-    Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
-    Statement statement = connection.createStatement();
+    Statement statement = ConnectionDB.getInstance().createStatement();
     PreparedStatement preparedStatement;
     PreparedStatement preparedStatementIns;
     ResultSet resultSet;

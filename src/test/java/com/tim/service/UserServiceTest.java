@@ -1,6 +1,5 @@
 package com.tim.service;
 
-import com.tim.repository.DatabaseRepository;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -12,47 +11,47 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class DatabaseRepositoryTest {
-    DatabaseRepository databaseRepository = new DatabaseRepository();
+public class UserServiceTest {
+    UserService userService = new UserService();
 
-    public DatabaseRepositoryTest() throws SQLException {
+    public UserServiceTest() throws SQLException {
     }
 
     @Test
     public void save() throws SQLException {
-        databaseRepository.save();
+        userService.save();
 
-        assertTrue(databaseRepository.connection.isClosed());
-        assertTrue(databaseRepository.statement.isClosed());
+        assertTrue(userService.connection.isClosed());
+        assertTrue(userService.statement.isClosed());
 
-        assertNull(databaseRepository.resultSet);
-        assertNull(databaseRepository.preparedStatement);
-        assertNull(databaseRepository.preparedStatementIns);
+        assertNull(userService.resultSet);
+        assertNull(userService.preparedStatement);
+        assertNull(userService.preparedStatementIns);
     }
 
     @Test
-    public void getAll() {
-        databaseRepository.getAll();
+    public void getAll() throws SQLException {
+        userService.getAll();
         assertEquals("SELECT developers_skills.id AS id, developers.id AS developer_id,developers.firstName AS firstName, developers.lastName AS lastName, developers.status AS status, specialty.name AS specialty, skills.name AS skill\n" +
-                              "FROM developers_skills LEFT JOIN developers ON developers_skills.developers_id = developers.id\n" +
-                              "LEFT JOIN specialty ON developers.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;"
-                , databaseRepository.sqlQuery);
+                        "FROM developers_skills LEFT JOIN developers ON developers_skills.developers_id = developers.id\n" +
+                        "LEFT JOIN specialty ON developers.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;"
+                , userService.sqlQuery);
     }
 
     @Test
-    public void deleteById() throws SQLException {
+    public void deleteById() {
         databaseRepository.deleteById(1L);
         assertEquals("UPDATE developers SET status = 'DELETED' WHERE id = ?", databaseRepository.sqlQuery);
     }
 
     @Test
-    public void update() throws SQLException {
+    public void update() {
         databaseRepository.update(1L, "Test", "LastTest");
         assertEquals("UPDATE developers SET firstName = ?, lastName = ? WHERE id = ?", databaseRepository.sqlQuery);
     }
 
     @Test
-    public void insert() throws SQLException {
+    public void insert() {
         databaseRepository.insert("1","2","ACTIVE",1,1);
         assertEquals("INSERT INTO developers(firstName, lastName, status, specialty_id) VALUES (?,?,?,?)"
                 , databaseRepository.sqlQuery);
@@ -102,15 +101,6 @@ public class DatabaseRepositoryTest {
         Mockito.doReturn(100).when(spiedList).size();
         assertEquals(100, spiedList.size());
     }
-
-
-
-
-
-
-
-
-
 
 
 

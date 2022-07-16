@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class ConnectionDB {
     private static volatile ConnectionDB instance;
     private static Connection connection = null;
-    private static final String DATABASE_URL = "jdbc:sqlite:identifier.sqlite";
-    private static final String USER = "";
-    private static final String PASSWORD = "";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
+    private static final String USER = "root";
+    private static final String PASSWORD = "password";
 
     private ConnectionDB() {}
 
@@ -18,14 +18,19 @@ public class ConnectionDB {
             synchronized (ConnectionDB.class) {
                 if (instance == null) {
                     instance = new ConnectionDB();
+                    installConnection();
                 }
             }
         }
         return connection;
     }
 
-    private static Connection installConnection() throws SQLException {
-        connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+    private static Connection installConnection() {
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 }

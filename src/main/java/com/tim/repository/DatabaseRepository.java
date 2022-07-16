@@ -3,31 +3,7 @@ import java.sql.*;
 
 public class DatabaseRepository implements DeveloperRepository {
 
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
-    static final String USER = "root";
-    static final String PASSWORD = "password";
-
-
-    Connection connection;
-
-    {
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     Statement statement;
-
-    {
-        try {
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     PreparedStatement preparedStatement;
     PreparedStatement preparedStatementIns;
     ResultSet resultSet;
@@ -67,7 +43,7 @@ public class DatabaseRepository implements DeveloperRepository {
             }
         }
         try {
-            connection.close();
+            ConnectionDB.getInstance().close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,6 +57,7 @@ public class DatabaseRepository implements DeveloperRepository {
                 FROM developers_skills LEFT JOIN developer ON developers_skills.developers_id = developer.id
                 LEFT JOIN specialty ON developer.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;""";
         try {
+            statement = ConnectionDB.getInstance().createStatement();
             resultSet = statement.executeQuery(sqlQuery);
             System.out.println("\nDevelopers:");
             while (resultSet.next()) {
@@ -111,7 +88,7 @@ public class DatabaseRepository implements DeveloperRepository {
     public void deleteById(Long id) {
         sqlQuery = "UPDATE developer SET status = 'DELETED' WHERE id = ?";
         try {
-            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -123,7 +100,7 @@ public class DatabaseRepository implements DeveloperRepository {
     public void update(Long id, String firstNewName, String lastNewName)  {
         sqlQuery = "UPDATE developer SET firstName = ?, lastName = ? WHERE id = ?";
         try {
-            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery);
             preparedStatement.setString(1 ,firstNewName);
             preparedStatement.setString(2 ,lastNewName);
             preparedStatement.setLong(3 ,id);
@@ -140,7 +117,7 @@ public class DatabaseRepository implements DeveloperRepository {
                    "VALUES (?,?,?,?)";
 
         try {
-            preparedStatementIns = connection.prepareStatement(sqlQuery);
+            preparedStatementIns = ConnectionDB.getInstance().prepareStatement(sqlQuery);
             preparedStatementIns.setString(1, firstName);
             preparedStatementIns.setString(2, lastName);
             preparedStatementIns.setString(3, status);
@@ -192,7 +169,7 @@ public class DatabaseRepository implements DeveloperRepository {
         String sqlQuery2 = "INSERT INTO developers_skills(developers_id, skills_id)" +
                 "VALUES (?, ?)";
 
-        preparedStatement = connection.prepareStatement(sqlQuery2);
+        preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery2);
         preparedStatement.setInt(1, getId());
         preparedStatement.setInt(2, skills);
         preparedStatement.executeUpdate();

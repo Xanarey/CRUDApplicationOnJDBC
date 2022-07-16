@@ -3,8 +3,6 @@ package com.tim.service;
 import com.tim.repository.DatabaseRepository;
 import com.tim.repository.DeveloperRepository;
 
-import java.sql.SQLException;
-
 public class UserService implements DeveloperRepository {
 
     DatabaseRepository databaseRepository = new DatabaseRepository();
@@ -36,7 +34,6 @@ public class UserService implements DeveloperRepository {
     public void insert(String firstName, String lastName, String status, int specialty, int skills) {
         databaseRepository.insert(firstName, lastName, status, specialty, skills);
     }
-
 
     public void getAllSpecialty() {
         databaseRepository.getAllSpecialty();

@@ -1,34 +1,30 @@
 package com.tim.controller;
-
-import com.tim.repository.DatabaseRepository;
 import com.tim.service.UserService;
-
-import java.sql.SQLException;
 
 public class DeveloperController {
 
     UserService userService = new UserService();
 
-    public DeveloperController() throws SQLException {
+    public DeveloperController() {
     }
 
-    public void saveDevelopers() throws SQLException {
+    public void saveDevelopers()  {
         userService.save();
     }
 
-    public void getAllDevelopers() throws SQLException {
+    public void getAllDevelopers() {
         userService.getAll();
     }
 
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(Long id) {
         userService.deleteById(id);
     }
 
-    public void updateDeveloper(Long id, String firstNewName, String lastNewName) throws SQLException {
+    public void updateDeveloper(Long id, String firstNewName, String lastNewName) {
         userService.update(id, firstNewName, lastNewName);
     }
 
-    public void insertDeveloper(String firstName, String lastName, String status, int specialty, int skills) throws SQLException {
+    public void insertDeveloper(String firstName, String lastName, String status, int specialty, int skills) {
         userService.insert(firstName, lastName, status, specialty, skills);
     }
 

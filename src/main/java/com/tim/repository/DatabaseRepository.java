@@ -1,43 +1,85 @@
 package com.tim.repository;
-import com.tim.repository.DeveloperRepository;
 import java.sql.*;
 
 public class DatabaseRepository implements DeveloperRepository {
 
-    //static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
-    static final String DATABASE_URL = "jdbc:sqlite:identifier.sqlite";
-    static final String USER = "";
-    static final String PASSWORD = "";
+    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
+    static final String USER = "root";
+    static final String PASSWORD = "password";
 
 
+    Connection connection;
 
-    Statement statement = ConnectionDB.getInstance().createStatement();
+    {
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    Statement statement;
+
+    {
+        try {
+            statement = ConnectionDB.getInstance().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     PreparedStatement preparedStatement;
     PreparedStatement preparedStatementIns;
     ResultSet resultSet;
-    String sqlQuery;
+    String sqlQuery = "";
 
-    public DatabaseRepository() throws SQLException {
+    public DatabaseRepository() {
     }
 
     @Override
-    public void save() throws SQLException {
-        if (resultSet != null) resultSet.close();
-        if (statement != null) statement.close();
-        if (preparedStatement != null) preparedStatement.close();
-        if (preparedStatement != null) preparedStatementIns.close();
-        connection.close();
+    public void save() {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (preparedStatementIns != null) {
+            try {
+                preparedStatementIns.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void getAll() {
 
-        sqlQuery = "SELECT developers_skills.id AS id, developers.id AS developer_id," +
-                   "developers.firstName AS firstName, developers.lastName AS lastName, " +
-                   "developers.status AS status, specialty.name AS specialty, skills.name AS skill\n" +
-                   "FROM developers_skills LEFT JOIN developers ON developers_skills.developers_id = developers.id\n" +
-                   "LEFT JOIN specialty ON developers.specialty_id = specialty.id " +
-                   "LEFT JOIN skills ON developers_skills.skills_id = skills.id;";
+        sqlQuery = """
+                SELECT developers_skills.id AS id, developers_skills.developers_id AS developer_id,developer.firstName AS firstName, developer.lastName AS lastName, developer.status AS status, specialty.name AS specialty, skills.name AS skill
+                FROM developers_skills LEFT JOIN developer ON developers_skills.developers_id = developer.id
+                LEFT JOIN specialty ON developer.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;""";
         try {
             resultSet = statement.executeQuery(sqlQuery);
             System.out.println("\nDevelopers:");
@@ -66,37 +108,49 @@ public class DatabaseRepository implements DeveloperRepository {
     }
 
     @Override
-    public void deleteById(Long id) throws SQLException {
-        sqlQuery = "UPDATE developers SET status = 'DELETED' WHERE id = ?";
-        preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setLong(1, id);
-        preparedStatement.executeUpdate();
+    public void deleteById(Long id) {
+        sqlQuery = "UPDATE developer SET status = 'DELETED' WHERE id = ?";
+        try {
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void update(Long id, String firstNewName, String lastNewName) throws SQLException {
-        sqlQuery = "UPDATE developers SET firstName = ?, lastName = ? WHERE id = ?";
-        preparedStatement = connection.prepareStatement(sqlQuery);
-        preparedStatement.setString(1 ,firstNewName);
-        preparedStatement.setString(2 ,lastNewName);
-        preparedStatement.setLong(3 ,id);
-        preparedStatement.executeUpdate();
+    public void update(Long id, String firstNewName, String lastNewName)  {
+        sqlQuery = "UPDATE developer SET firstName = ?, lastName = ? WHERE id = ?";
+        try {
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1 ,firstNewName);
+            preparedStatement.setString(2 ,lastNewName);
+            preparedStatement.setLong(3 ,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void insert(String firstName, String lastName, String status, int specialty, int skills) throws SQLException {
+    public void insert(String firstName, String lastName, String status, int specialty, int skills)  {
 
-        sqlQuery = "INSERT INTO developers(firstName, lastName, status, specialty_id) " +
+        sqlQuery = "INSERT INTO developer(firstName, lastName, status, specialty_id) " +
                    "VALUES (?,?,?,?)";
 
-        preparedStatementIns = connection.prepareStatement(sqlQuery);
-        preparedStatementIns.setString(1, firstName);
-        preparedStatementIns.setString(2, lastName);
-        preparedStatementIns.setString(3, status);
-        preparedStatementIns.setInt(4, specialty);
-        preparedStatementIns.executeUpdate();
+        try {
+            preparedStatementIns = connection.prepareStatement(sqlQuery);
+            preparedStatementIns.setString(1, firstName);
+            preparedStatementIns.setString(2, lastName);
+            preparedStatementIns.setString(3, status);
+            preparedStatementIns.setInt(4, specialty);
+            preparedStatementIns.executeUpdate();
+            insertDeveloper_Skills(skills);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        insertDeveloper_Skills(skills);
     }
 
     public void getAllSpecialty() {
@@ -145,7 +199,7 @@ public class DatabaseRepository implements DeveloperRepository {
     }
 
     public int getId() throws SQLException {
-        String sqlQuery3 = "SELECT id FROM developers ORDER BY id DESC  LIMIT 1";
+        String sqlQuery3 = "SELECT id FROM developer ORDER BY id DESC  LIMIT 1";
         resultSet = statement.executeQuery(sqlQuery3);
         int id = 0;
         while (resultSet.next()) {

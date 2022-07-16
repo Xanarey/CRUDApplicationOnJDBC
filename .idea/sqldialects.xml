@@ -4,6 +4,6 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/tim/repository/DatabaseRepository.java" dialect="MySQL" />
   </component>
   <component name="SqlResolveMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/tim/repository/DatabaseRepository.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;d9f6aaf1-deb8-438d-8f16-dfc80829fb76&quot;    }   }  } }}" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tim/repository/DatabaseRepository.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;8e79c78d-fef1-420d-80ce-b04d86407007&quot;    },    &quot;group&quot;:{     &quot;@kind&quot;:&quot;schema&quot;,     &quot;node&quot;:{      &quot;name&quot;:{       &quot;@qname&quot;:&quot;datadevelopers&quot;      }     }    }   }  } }}" />
   </component>
 </project>

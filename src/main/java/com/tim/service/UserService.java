@@ -9,31 +9,31 @@ public class UserService implements DeveloperRepository {
 
     DatabaseRepository databaseRepository = new DatabaseRepository();
 
-    public UserService() throws SQLException {
+    public UserService() {
     }
 
     @Override
-    public void save() throws SQLException {
+    public void save() {
         databaseRepository.save();
     }
 
     @Override
-    public void getAll() throws SQLException {
+    public void getAll() {
         databaseRepository.getAll();
     }
 
     @Override
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(Long id) {
         databaseRepository.deleteById(id);
     }
 
     @Override
-    public void update(Long id, String firstNewName, String lastNewName) throws SQLException {
+    public void update(Long id, String firstNewName, String lastNewName) {
         databaseRepository.update(id, firstNewName, lastNewName);
     }
 
     @Override
-    public void insert(String firstName, String lastName, String status, int specialty, int skills) throws SQLException {
+    public void insert(String firstName, String lastName, String status, int specialty, int skills) {
         databaseRepository.insert(firstName, lastName, status, specialty, skills);
     }
 

@@ -1,6 +1,5 @@
 package com.tim.view;
 import com.tim.controller.DeveloperController;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -9,10 +8,10 @@ public class UserChoice {
     Scanner scanner = new Scanner(System.in);
     DeveloperController developerController = new DeveloperController();
 
-    public UserChoice() throws SQLException {
+    public UserChoice() {
     }
 
-    public void start() throws SQLException {
+    public void start()  {
         do {
             System.out.println(MENU);
             CHOICE_MENU = scanner.nextLong();
@@ -57,7 +56,7 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 4) {
-                System.out.println("Введите id для удаления:");
+                System.out.println("Введите developer_id для удаления:");
                 do {
                     ID = scanner.nextLong();
                 } while (ID <= 0);
@@ -66,7 +65,7 @@ public class UserChoice {
             }
 
             if (CHOICE_MENU == 5) {
-                System.out.println("Введите id редактируемого разработчика");
+                System.out.println("Введите developer_id редактируемого разработчика");
                 do {
                     ID = scanner.nextLong();
                 } while (ID <= 0);

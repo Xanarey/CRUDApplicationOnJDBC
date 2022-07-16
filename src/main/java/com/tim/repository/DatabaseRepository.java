@@ -22,7 +22,7 @@ public class DatabaseRepository implements DeveloperRepository {
 
     {
         try {
-            statement = ConnectionDB.getInstance().createStatement();
+            statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }

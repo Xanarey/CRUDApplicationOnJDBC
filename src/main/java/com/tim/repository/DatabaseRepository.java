@@ -3,11 +3,11 @@ import java.sql.*;
 
 public class DatabaseRepository implements DeveloperRepository {
 
-    Statement statement;
-    PreparedStatement preparedStatement;
-    PreparedStatement preparedStatementIns;
-    ResultSet resultSet;
-    String sqlQuery = "";
+    public Statement statement;
+    public PreparedStatement preparedStatement;
+    public PreparedStatement preparedStatementIns;
+    public ResultSet resultSet;
+    public String sqlQuery = "";
 
     public DatabaseRepository() {
     }
@@ -177,6 +177,8 @@ public class DatabaseRepository implements DeveloperRepository {
 
     public int getId() throws SQLException {
         String sqlQuery3 = "SELECT id FROM developer ORDER BY id DESC  LIMIT 1";
+
+        statement = ConnectionDB.getInstance().createStatement();
         resultSet = statement.executeQuery(sqlQuery3);
         int id = 0;
         while (resultSet.next()) {

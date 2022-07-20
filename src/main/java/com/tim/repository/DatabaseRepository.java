@@ -53,6 +53,8 @@ public class DatabaseRepository implements DeveloperRepository {
                     developer.setStatus(Status.ACTIVE);
                 if (Objects.equals(status, Status.DELETED.name()))
                     developer.setStatus(Status.DELETED);
+                developer.setSpecialty(getSpecialtyById(id));
+
 
                 developerList.add(developer);
             }
@@ -62,6 +64,23 @@ public class DatabaseRepository implements DeveloperRepository {
         }
         return developerList;
     }
+
+//    private Specialty getSpecialtyById(Long id) {
+//        Specialty specialty = new Specialty();
+//                sqlQuery = "SELECT specialty.name AS specialty FROM developer LEFT JOIN specialty  on specialty.id = developer.specialty_id WHERE specialty_id = ? LIMIT 1\n";
+//        try {
+//            preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery);
+//            preparedStatement.setLong(1, id);
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                String spec = resultSet.getString("specialty");
+//                specialty.setName(spec);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return specialty;
+//    }                              // TODO ОСТАНОВИЛСЯ ЗДЕСЬ
 
     @Override
     public void save() {

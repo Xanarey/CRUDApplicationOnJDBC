@@ -1,5 +1,12 @@
 package com.tim.repository;
+import com.tim.model.Developer;
+import com.tim.model.Specialty;
+import com.tim.model.Status;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class DatabaseRepository implements DeveloperRepository {
 
@@ -9,7 +16,51 @@ public class DatabaseRepository implements DeveloperRepository {
     public ResultSet resultSet;
     public String sqlQuery = "";
 
-    public DatabaseRepository() {
+    @Override
+    public Developer getById(Long aLong) {
+        return getAllDeveloperInternal().stream()
+                .filter(s -> s.getId().equals(aLong)).findFirst().orElse(null);
+    }
+
+
+    private List<Developer> getAllDeveloperInternal() {
+        List<Developer> developerList = new ArrayList<>();
+        Developer developer;
+        try {
+            statement = ConnectionDB.getInstance().createStatement(
+                    ResultSet.TYPE_FORWARD_ONLY,
+                    ResultSet.CONCUR_UPDATABLE
+            );
+
+            sqlQuery = """
+                SELECT developer.id AS id, developer.firstName AS firstName, developer.lastName AS lastName,developer.status AS status, specialty.name AS specialty
+                FROM developer LEFT JOIN specialty ON developer.specialty_id = specialty.id;""";
+
+            ResultSet resultSetAll = statement.executeQuery(sqlQuery);
+
+            while (resultSetAll.next()) {
+                Long id = resultSetAll.getLong("id");
+                String firstName = resultSetAll.getString("firstName");
+                String lastName = resultSetAll.getString("lastName");
+                String status = resultSetAll.getString("status");
+
+                developer = new Developer();
+                developer.setId(id);
+                developer.setFirstName(firstName);
+                developer.setLastName(lastName);
+
+                if (Objects.equals(status, Status.ACTIVE.name()))
+                    developer.setStatus(Status.ACTIVE);
+                if (Objects.equals(status, Status.DELETED.name()))
+                    developer.setStatus(Status.DELETED);
+
+                developerList.add(developer);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return developerList;
     }
 
     @Override
@@ -50,39 +101,7 @@ public class DatabaseRepository implements DeveloperRepository {
     }
 
     @Override
-    public void getAll() {
-
-        sqlQuery = """
-                SELECT developers_skills.id AS id, developers_skills.developers_id AS developer_id,developer.firstName AS firstName, developer.lastName AS lastName, developer.status AS status, specialty.name AS specialty, skills.name AS skill
-                FROM developers_skills LEFT JOIN developer ON developers_skills.developers_id = developer.id
-                LEFT JOIN specialty ON developer.specialty_id = specialty.id LEFT JOIN skills ON developers_skills.skills_id = skills.id;""";
-        try {
-            statement = ConnectionDB.getInstance().createStatement();
-            resultSet = statement.executeQuery(sqlQuery);
-            System.out.println("\nDevelopers:");
-            while (resultSet.next()) {
-
-                int devId = resultSet.getInt("id");
-                int id = resultSet.getInt("developer_id");
-                String firstName = resultSet.getString("firstName");
-                String lastName = resultSet.getString("lastName");
-                String status = resultSet.getString("status");
-                String specialty = resultSet.getString("specialty");
-                String skill = resultSet.getString("skill");
-
-                System.out.println("\n================\n");
-                System.out.println("id: " + devId);
-                System.out.println("developer_id: " + id);
-                System.out.println("firstName: " + firstName);
-                System.out.println("lastName: " + lastName);
-                System.out.println("status: " + status);
-                System.out.println("specialty: " + specialty);
-                System.out.println("skill: " + skill);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    public List<Developer> getAll() { return getAllDeveloperInternal();}
 
     @Override
     public void deleteById(Long id) {

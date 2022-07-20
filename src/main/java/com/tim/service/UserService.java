@@ -1,7 +1,10 @@
 package com.tim.service;
 
+import com.tim.model.Developer;
 import com.tim.repository.DatabaseRepository;
 import com.tim.repository.DeveloperRepository;
+
+import java.util.List;
 
 public class UserService implements DeveloperRepository {
 
@@ -11,13 +14,18 @@ public class UserService implements DeveloperRepository {
     }
 
     @Override
+    public Developer getById(Long aLong) {
+        return databaseRepository.getById(aLong);
+    }
+
+    @Override
     public void save() {
         databaseRepository.save();
     }
 
     @Override
-    public void getAll() {
-        databaseRepository.getAll();
+    public List<Developer> getAll() {
+        return databaseRepository.getAll();
     }
 
     @Override

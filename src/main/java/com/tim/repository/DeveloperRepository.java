@@ -1,4 +1,6 @@
 package com.tim.repository;
 
-public interface DeveloperRepository extends GeneralRepository{
+import com.tim.model.Developer;
+
+public interface DeveloperRepository extends GeneralRepository<Developer, Long>{
 }

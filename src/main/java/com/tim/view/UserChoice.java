@@ -17,7 +17,7 @@ public class UserChoice {
             CHOICE_MENU = scanner.nextLong();
 
             if (CHOICE_MENU == 2) {
-                developerController.getAllDevelopers();
+                System.out.println(developerController.getAllDevelopers());
             }
 
             if (CHOICE_MENU == 3) {
@@ -82,6 +82,14 @@ public class UserChoice {
                 developerController.updateDeveloper(ID, FIRST_NAME, LAST_NAME);
             }
 
+            if (CHOICE_MENU == 6) {
+                System.out.println("Введите id разработчика");
+                do {
+                    ID = scanner.nextLong();
+                } while (ID <= 0);
+                System.out.println(developerController.getDeveloperById(ID));
+            }
+
         } while (CHOICE_MENU != 1);
         developerController.saveDevelopers();
         System.out.println("Вы вышли из приложения");
@@ -94,6 +102,7 @@ public class UserChoice {
             3.  Добавить разработчика
             4.  Удалить разработчика
             5.  Редактировать данные о разработчике
+            6.  Получить разработчика по id
             """;
 
     public static int SKILL;

@@ -1,9 +1,18 @@
 package com.tim.service;
 
 import com.tim.repository.ConnectionDB;
+import org.assertj.core.annotations.Beta;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.*;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -47,4 +56,9 @@ public class UserServiceTest {
         assertEquals(userService.databaseRepository.sqlQuery, "INSERT INTO developer(firstName, lastName, status, specialty_id) " +
                 "VALUES (?,?,?,?)");
     }
+
+    //==================================Mockito===================================
+
+
+
 }

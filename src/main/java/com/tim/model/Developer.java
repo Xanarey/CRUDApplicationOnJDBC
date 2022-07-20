@@ -20,6 +20,9 @@ public class Developer {
         skills = new ArrayList<>();
     }
 
+    public Developer() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,8 +73,8 @@ public class Developer {
 
     @Override
     public String toString() {
-        return "Developer{" +
-                "id=" + id +
+        return "\n" + "Developer{" +
+                "  id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", status=" + status +

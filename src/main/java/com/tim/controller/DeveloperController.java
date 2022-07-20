@@ -1,5 +1,8 @@
 package com.tim.controller;
+import com.tim.model.Developer;
 import com.tim.service.UserService;
+
+import java.util.List;
 
 public class DeveloperController {
 
@@ -12,8 +15,12 @@ public class DeveloperController {
         userService.save();
     }
 
-    public void getAllDevelopers() {
-        userService.getAll();
+    public Developer getDeveloperById(Long id) {
+        return userService.getById(id);
+    }
+
+    public List<Developer> getAllDevelopers() {
+        return userService.getAll();
     }
 
     public void deleteById(Long id) {

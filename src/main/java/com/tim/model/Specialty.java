@@ -5,12 +5,7 @@ import java.util.Objects;
 public class Specialty {
     private String name;
 
-    public Specialty(String name) {
-        this.name = name;
-    }
-
-    public Specialty() {
-    }
+    public Specialty() {}
 
     public String getName() {
         return name;
@@ -21,11 +16,7 @@ public class Specialty {
     }
 
     @Override
-    public String toString() {
-        return "Specialty{" +
-                "name='" + name + '\'' +
-                '}';
-    }
+    public String toString() { return "Specialty{" + "name='" + name + '\'' + '}';}
 
     @Override
     public boolean equals(Object o) {

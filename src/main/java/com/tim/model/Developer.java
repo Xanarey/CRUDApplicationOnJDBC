@@ -1,6 +1,4 @@
 package com.tim.model;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,14 +9,6 @@ public class Developer {
     private Status status;
     private Specialty specialty;
     private List<Skill> skills;
-
-    public Developer(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        status = Status.ACTIVE;
-        specialty = new Specialty();
-        skills = new ArrayList<>();
-    }
 
     public Developer() {
     }

@@ -1,5 +1,6 @@
 package com.tim.repository;
 import com.tim.model.Developer;
+import com.tim.model.Skill;
 import com.tim.model.Specialty;
 import com.tim.model.Status;
 
@@ -33,13 +34,14 @@ public class DatabaseRepository implements DeveloperRepository {
             );
 
             sqlQuery = """
-                SELECT developer.id AS id, developer.firstName AS firstName, developer.lastName AS lastName,developer.status AS status, specialty.name AS specialty
+                SELECT developer.id AS id, developer.firstName AS firstName, developer.lastName AS lastName,developer.status AS status, specialty.name AS specialty, developer.specialty_id AS specialty_id
                 FROM developer LEFT JOIN specialty ON developer.specialty_id = specialty.id;""";
 
             ResultSet resultSetAll = statement.executeQuery(sqlQuery);
 
             while (resultSetAll.next()) {
                 Long id = resultSetAll.getLong("id");
+                Long specialty_id = resultSetAll.getLong("specialty_id");
                 String firstName = resultSetAll.getString("firstName");
                 String lastName = resultSetAll.getString("lastName");
                 String status = resultSetAll.getString("status");
@@ -53,8 +55,8 @@ public class DatabaseRepository implements DeveloperRepository {
                     developer.setStatus(Status.ACTIVE);
                 if (Objects.equals(status, Status.DELETED.name()))
                     developer.setStatus(Status.DELETED);
-                developer.setSpecialty(getSpecialtyById(id));
-
+                developer.setSpecialty(getSpecialtyById(specialty_id));
+                developer.setSkills(getSkillsById(id));
 
                 developerList.add(developer);
             }
@@ -65,22 +67,46 @@ public class DatabaseRepository implements DeveloperRepository {
         return developerList;
     }
 
-//    private Specialty getSpecialtyById(Long id) {
-//        Specialty specialty = new Specialty();
-//                sqlQuery = "SELECT specialty.name AS specialty FROM developer LEFT JOIN specialty  on specialty.id = developer.specialty_id WHERE specialty_id = ? LIMIT 1\n";
-//        try {
-//            preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery);
-//            preparedStatement.setLong(1, id);
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                String spec = resultSet.getString("specialty");
-//                specialty.setName(spec);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return specialty;
-//    }                              // TODO ОСТАНОВИЛСЯ ЗДЕСЬ
+    private List<Skill> getSkillsById(Long id) {
+        List<Skill> skills = new ArrayList<>();
+
+        sqlQuery = "SELECT skills.name AS skills\n" +
+                   "FROM developers_skills LEFT JOIN skills ON developers_skills.skills_id = skills.id\n" +
+                   "WHERE developers_id = ?";
+        try {
+            preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery);
+            preparedStatement.setLong(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String skill = resultSet.getString("skills");
+                Skill skillPlug = new Skill();
+                skillPlug.setName(skill);
+                skills.add(skillPlug);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return skills;
+    }
+
+    private Specialty getSpecialtyById(Long id) {
+        Specialty specialty = new Specialty();
+                sqlQuery =  "SELECT specialty.name AS specialty\n" +
+                            "FROM developer LEFT JOIN specialty  on specialty.id = developer.specialty_id " +
+                            "WHERE specialty_id = ? LIMIT 1\n";
+        try {
+            preparedStatement = ConnectionDB.getInstance().prepareStatement(sqlQuery);
+            preparedStatement.setLong(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String spec = resultSet.getString("specialty");
+                specialty.setName(spec);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return specialty;
+    }
 
     @Override
     public void save() {

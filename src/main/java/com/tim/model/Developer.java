@@ -79,8 +79,8 @@ public class Developer {
                 ", lastName='" + lastName + '\'' +
                 ", status=" + status +
                 ", specialty=" + specialty +
-                ", skills=" + skills +
-                '}';
+                ", Skills=" + skills +
+                '}' + "\n";
     }
 
     @Override

@@ -3,9 +3,18 @@ package com.tim.model;
 import java.util.Objects;
 
 public class Specialty {
+    private Integer id;
     private String name;
 
     public Specialty() {}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -16,18 +25,23 @@ public class Specialty {
     }
 
     @Override
-    public String toString() { return "Specialty{" + "name='" + name + '\'' + '}';}
+    public String toString() {
+        return "Specialty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Specialty)) return false;
         Specialty specialty = (Specialty) o;
-        return Objects.equals(getName(), specialty.getName());
+        return Objects.equals(getId(), specialty.getId()) && Objects.equals(getName(), specialty.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getId(), getName());
     }
 }

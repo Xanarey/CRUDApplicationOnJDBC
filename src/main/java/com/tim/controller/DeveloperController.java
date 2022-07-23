@@ -1,21 +1,18 @@
 package com.tim.controller;
 import com.tim.model.Developer;
-import com.tim.service.UserService;
+import com.tim.service.DeveloperService;
 
 import java.util.List;
 
 public class DeveloperController {
 
-    UserService userService = new UserService();
+    DeveloperService userService = new DeveloperService();
 
     public DeveloperController() {
     }
 
-    public void saveDevelopers()  {
-        userService.save();
-    }
-
     public Developer getDeveloperById(Long id) {
+        Developer developer = new Developer();
         return userService.getById(id);
     }
 
@@ -27,20 +24,14 @@ public class DeveloperController {
         userService.deleteById(id);
     }
 
-    public void updateDeveloper(Long id, String firstNewName, String lastNewName) {
-        userService.update(id, firstNewName, lastNewName);
+    public Developer updateDeveloper(Long id, String firstNewName, String lastNewName) {
+        Developer developer = new Developer();
+        developer.setId(id);
+        userService.update(developer);
     }
 
     public void insertDeveloper(String firstName, String lastName, String status, int specialty, int skills) {
         userService.insert(firstName, lastName, status, specialty, skills);
-    }
-
-    public void getAllSpecialtyDeveloper() {
-        userService.getAllSpecialty();
-    }
-
-    public void getAllSkillsDeveloper() {
-        userService.getAllSkills();
     }
 
 }

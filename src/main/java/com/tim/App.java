@@ -1,10 +1,12 @@
-package com.tim.view;
+package com.tim;
+
+import com.tim.view.MainView;
 
 import java.sql.SQLException;
 
 public class App {
     public static void main( String[] args ) throws SQLException {
-        UserChoice userChoice = new UserChoice();
-        userChoice.start();
+        MainView mainView = new MainView();
+        mainView.start();
     }
 }

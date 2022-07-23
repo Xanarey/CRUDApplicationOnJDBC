@@ -1,14 +1,19 @@
 package com.tim.view;
 import com.tim.controller.DeveloperController;
+import com.tim.model.Skill;
+
 import java.util.Objects;
 import java.util.Scanner;
 
-public class UserChoice {
+public class MainView {
 
-    Scanner scanner = new Scanner(System.in);
-    DeveloperController developerController = new DeveloperController();
+    private final DeveloperView developerView = new DeveloperView();
+    private final SkillView skillView = new SkillView();
 
-    public UserChoice() {
+    private final Scanner scanner = new Scanner(System.in);
+    private final DeveloperController developerController = new DeveloperController();
+
+    public MainView() {
     }
 
     public void start()  {

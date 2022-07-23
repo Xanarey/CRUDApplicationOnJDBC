@@ -1,23 +1,24 @@
-package com.tim.repository;
+package com.tim.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ConnectionDB {
-    private static volatile ConnectionDB instance;
+public class JdbcUtils {
+    private static volatile JdbcUtils instance;
     private static Connection connection = null;
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/datadevelopers";
     private static final String USER = "root";
     private static final String PASSWORD = "password";
 
-    private ConnectionDB() {}
+    private JdbcUtils() {}
 
     public static Connection getInstance() {
         if (instance == null) {
-            synchronized (ConnectionDB.class) {
+            synchronized (JdbcUtils.class) {
                 if (instance == null) {
-                    instance = new ConnectionDB();
+                    instance = new JdbcUtils();
                     installConnection();
                 }
             }
@@ -32,5 +33,9 @@ public class ConnectionDB {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public static PreparedStatement getPreparedStatement(String sql) throws SQLException {
+        return getInstance().prepareStatement(sql);
     }
 }

@@ -1,5 +1,7 @@
 package com.tim.repository;
 import com.tim.model.Developer;
+import com.tim.model.Skill;
+import com.tim.model.Specialty;
 import com.tim.model.Status;
 import com.tim.utils.JdbcUtils;
 
@@ -13,10 +15,15 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer getById(Long aLong) {
         Developer developer = new Developer();
-        try {
-            Statement statement = JdbcUtils.getInstance().createStatement();
-            String sqlQuery = "SELECT developer.id AS id, developer.firstName, developer.lastName, developer.status " +
-                              "FROM developer LEFT JOIN specialty ON developer.specialty_id = specialty.id;";
+        Specialty specialty = new Specialty();
+        List<Skill> skills = new ArrayList<>();
+
+        try(Statement statement = JdbcUtils.getInstance().createStatement()) {
+            String sqlQuery = "" +
+                    "SELECT developer.id AS id, developer.firstName, developer.lastName, developer.status, specialty.name AS specialty, developers_skills.skills_id AS skills " +
+                    "FROM developer " +
+                    "LEFT JOIN specialty ON developer.specialty_id = specialty.id " +
+                    "LEFT JOIN developers_skills ON developer.id = developers_skills.developers_id;";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             developer.setId(resultSet.getLong("id"));
             developer.setFirstName(resultSet.getString("firstName"));
@@ -26,10 +33,20 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
             if (resultSet.getString("status").equals("DELETED"))
                 developer.setStatus(Status.DELETED);
 
+            specialty.setName(resultSet.getString("specialty"));
+            developer.setSpecialty(specialty);
+
+            while (resultSet.next()) {
+                Skill skill = new Skill();
+                skill.setName(resultSet.getString("skill"));
+                skills.add(skill);
+            }
+            developer.setSkills(skills);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return developer; //  TODO закончил здесь
     }
 
     @Override
